@@ -11,6 +11,11 @@ const userSchema = Joi.object({
   confirmPassword: Joi.ref("password"),
 });
 
+const userSignInSchema = Joi.object({
+  email: Joi.string().email().lowercase().required(),
+  password: Joi.string().pattern(passwordRegex).required(),
+});
+
 const validateSignup = (req: Request, res: Response, next: NextFunction) => {
   if (userSchema.validate(req.body).error)
     return res.status(422).send(userSchema.validate(req.body).error?.message);
@@ -18,4 +23,13 @@ const validateSignup = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export { validateSignup };
+const validateSignin = (req: Request, res: Response, next: NextFunction) => {
+  if (userSignInSchema.validate(req.body).error)
+    return res
+      .status(400)
+      .send(userSignInSchema.validate(req.body).error?.message);
+
+  next();
+};
+
+export { validateSignup, validateSignin };
