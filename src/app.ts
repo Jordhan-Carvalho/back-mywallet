@@ -5,7 +5,7 @@ import cors from "cors";
 
 import usersController from "./controllers/usersController";
 
-const app = express();
+export const app = express();
 
 app.use(cors());
 app.use(express.json());
