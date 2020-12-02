@@ -12,9 +12,9 @@ router.post("/sign-up", validateSignup, async (req, res) => {
 
   try {
     const createdUser = await usersService.create(userParams);
-    res.send(createdUser).status(201);
+    res.status(201).send(createdUser);
   } catch (e) {
-    res.send(e.message).status(409);
+    res.status(409).send(e.message);
   }
 });
 
@@ -27,7 +27,7 @@ router.post("/sign-in", validateSignin, async (req, res) => {
     if (!user) return res.sendStatus(401);
     const token = await sessionsService.create(user.id as number);
 
-    res.send({ ...user, token }).status(200);
+    res.status(200).send({ ...user, token });
   } catch (e) {
     console.log("Catch", e);
   }

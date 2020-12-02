@@ -1,7 +1,7 @@
 import axios from "axios";
 
 describe("POST /sign-up", () => {
-  it("should return 201 Created", async () => {
+  it("should return 409 conflict email has to be unique", async () => {
     const body = {
       name: "testing",
       email: "test@test.com",
@@ -14,7 +14,7 @@ describe("POST /sign-up", () => {
       body
     );
 
-    expect(resp.status).toBe(201);
+    expect(resp.status).toBe(409);
   });
 
   it("should return 422 Unprocessable Entity", async () => {

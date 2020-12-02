@@ -12,6 +12,7 @@ const create = async (user: User): Promise<User> => {
     [name, email, hashedPass]
   );
   const newUser = resp.rows[0];
+
   return newUser;
 };
 
