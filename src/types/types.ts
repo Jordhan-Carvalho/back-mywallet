@@ -6,4 +6,9 @@ type User = {
   confirmPassword?: string;
 };
 
-export { User };
+type Session = {
+  userId: number;
+  token: string;
+};
+
+export { User, Session };

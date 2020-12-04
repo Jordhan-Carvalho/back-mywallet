@@ -11,4 +11,15 @@ const create = async (userId: number): Promise<string> => {
   return token;
 };
 
-export default { create };
+const deleteSessions = async (userId: number) => {
+  await db.query(`DELETE FROM sessions WHERE "userId" = $1`, [userId]);
+};
+
+const findByToken = async (token: string) => {
+  const resp = await db.query("SELECT * FROM sessions WHERE token = $1", [
+    token,
+  ]);
+  return resp.rows[0];
+};
+
+export default { create, deleteSessions, findByToken };

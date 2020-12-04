@@ -29,6 +29,11 @@ const findByEmail = async (user: User): Promise<User | undefined> => {
   return foundUser;
 };
 
-const isEmailUnique = async () => {};
+const findById = async (userId: number) => {
+  const resp = await db.query('SELECT * FROM users WHERE "userId" = $1', [
+    userId,
+  ]);
+  return resp.rows[0];
+};
 
-export default { create, findByEmail };
+export default { create, findByEmail, findById };

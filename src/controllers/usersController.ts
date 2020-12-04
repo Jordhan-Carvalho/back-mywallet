@@ -4,6 +4,7 @@ import usersService from "../services/usersService";
 import sessionsService from "../services/sessionsService";
 import { User } from "../types/types";
 import { validateSignin, validateSignup } from "../middlewares/validators";
+import authMiddleware from "middlewares/authMiddleware";
 
 const router = express.Router();
 
@@ -30,6 +31,15 @@ router.post("/sign-in", validateSignin, async (req, res) => {
     res.status(200).send({ ...user, token });
   } catch (e) {
     console.log("Catch", e);
+  }
+});
+
+router.post("/logout", authMiddleware, async (req, res) => {
+  try {
+    await sessionsService.deleteSessions(req.user.id);
+    res.sendStatus(200);
+  } catch (error) {
+    res.status(500).send("Not able to delete sessions");
   }
 });
 
