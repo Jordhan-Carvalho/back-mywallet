@@ -19,6 +19,7 @@ const findByToken = async (token: string) => {
   const resp = await db.query("SELECT * FROM sessions WHERE token = $1", [
     token,
   ]);
+
   return resp.rows[0];
 };
 

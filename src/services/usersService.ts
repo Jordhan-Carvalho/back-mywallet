@@ -30,9 +30,7 @@ const findByEmail = async (user: User): Promise<User | undefined> => {
 };
 
 const findById = async (userId: number) => {
-  const resp = await db.query('SELECT * FROM users WHERE "userId" = $1', [
-    userId,
-  ]);
+  const resp = await db.query("SELECT * FROM users WHERE id = $1", [userId]);
   return resp.rows[0];
 };
 

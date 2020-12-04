@@ -16,6 +16,12 @@ const userSignInSchema = Joi.object({
   password: Joi.string().pattern(passwordRegex).required(),
 });
 
+const entrySchema = Joi.object({
+  value: Joi.number().required(),
+  description: Joi.string().min(2).max(300).required(),
+  type: Joi.string().valid("entrada", "saida").required(),
+});
+
 const validateSignup = (req: Request, res: Response, next: NextFunction) => {
   if (userSchema.validate(req.body).error)
     return res.status(422).send(userSchema.validate(req.body).error?.message);
@@ -32,4 +38,13 @@ const validateSignin = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export { validateSignup, validateSignin };
+const validateEntry = (req: Request, res: Response, next: NextFunction) => {
+  if (entrySchema.validate(req.body).error)
+    return res
+      .status(400)
+      .send(userSignInSchema.validate(req.body).error?.message);
+
+  next();
+};
+
+export { validateSignup, validateSignin, validateEntry };
